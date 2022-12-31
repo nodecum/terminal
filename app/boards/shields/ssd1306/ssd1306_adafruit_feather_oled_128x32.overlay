@@ -1,0 +1,77 @@
+/*
+   Adafruit Feather Wing OLED 128x32
+   with 4 Buttons
+*/
+
+/ {
+	chosen {
+		zephyr,display = &ssd1306_ssd1306_adafruit_feather_oled_128x32;
+	};
+};
+
+&feather_i2c {
+	status = "okay";
+
+	ssd1306_ssd1306_adafruit_feather_oled_128x32: ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		width = <128>;
+		height = <32>;
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <31>;
+		segment-remap;
+		com-invdir;
+		com-sequential;
+		prechargep = <0x22>;
+	};
+};
+
+
+/ {
+	buttons {
+		compatible = "gpio-keys";
+		// D5  is P1.08
+		// D6  is P0.07
+		// D7  is P1.02 (Button)
+		// D8  is P0.16 (NeoPixel)
+		// D9  is P0.26
+		// D10 is P0.27
+		/* GPIO D9 -> P0.26 */
+		button1: button_1 {
+			gpios = <&gpio0 26 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button 1 switch";
+		};
+		/* GPIO D6 -> P0.07 */
+		button2: button_2 {
+			gpios = <&gpio0 7 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button 2 switch";
+		};
+		/* GPIO D5 -> P1.08 */
+		button3: button_3 {
+			gpios = <&gpio1 8 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button 3 switch";
+		};
+		/* GPIO D10 -> P0.27 */
+		button4: button_4 {
+			gpios = <&gpio0 27 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button 4 switch";			
+		};
+	};
+};
+
+/ {
+	aliases {
+		sw1 = &button1;
+		sw2 = &button2;
+		sw3 = &button3;
+		sw4 = &button4;
+	};
+};
+
+/*
+Local Variables: 
+mode: dts
+End:
+*/

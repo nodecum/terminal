@@ -1,0 +1,3 @@
+* ANSI Terminal for Zephyr
+** Build
+: west build -p always -b adafruit_feather_nrf52840 app -- -DSHIELD="ssd1306_adafruit_feather_oled_128_32"
